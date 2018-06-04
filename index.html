@@ -5,6 +5,24 @@
     <title>Title</title>
 </head>
 <body>
-
+<div id="app">
+    <input />
+    <span>我啥也不知道</span>
+</div>
+<div id="app2">
+</div>
 </body>
+<script>
+    var df = document.createDocumentFragment(); // documentFragment 对象可以劫持 DOM结构。加入documentFragment的Node将自动从DOM中删除
+    var app = document.getElementById("app");
+    var child;
+    while (child = app.firstChild)
+    {
+        df.appendChild(child);
+    }
+    app.appendChild(df);
+</script>
+
+
+<script src="tiny.js"></script>
 </html>
