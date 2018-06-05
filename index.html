@@ -5,24 +5,22 @@
     <title>Title</title>
 </head>
 <body>
-<div id="app">
-    <input />
-    <span>我啥也不知道</span>
-</div>
 <div id="app2">
+    <input t-model="text1"/>
+    {{text2}}
 </div>
 </body>
+<script src="tiny.js"></script>
 <script>
-    var df = document.createDocumentFragment(); // documentFragment 对象可以劫持 DOM结构。加入documentFragment的Node将自动从DOM中删除
-    var app = document.getElementById("app");
-    var child;
-    while (child = app.firstChild)
-    {
-        df.appendChild(child);
-    }
-    app.appendChild(df);
+    var ty2 = new tiny({
+        ele:"app2",
+        data:{
+            text1:"这是input值",
+            text2:"这是text值",
+        }
+    });
 </script>
 
 
-<script src="tiny.js"></script>
+
 </html>
