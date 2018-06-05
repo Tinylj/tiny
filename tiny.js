@@ -1,4 +1,4 @@
-var obj = {}
+var obj = {};
 Object.defineProperty(obj,"hello",{
     get: function () {
         console.log("get方法被调用了");
@@ -10,6 +10,28 @@ Object.defineProperty(obj,"hello",{
 obj.hello;
 obj.hello = "abc";
 
+var defineProperty = function(obj,key,val)
+{
+    Object.defineProperty(obj,key,{
+        get: function () {
+            return val;
+        },
+        set: function (newVal) {
+            if(val == newVal) return;
+            val = newVal;
+        }
+    });
+};
+var observe = function(obj)
+{
+    Object.keys(obj).forEach(function(key)
+    {
+        defineProperty(obj,key,obj[key]);
+    });
+};
+
+
+//编译节点
 var compile = function(node,vm)
 {
     var reg = /\{\{(.*)\}\}/;
@@ -39,7 +61,7 @@ var compile = function(node,vm)
         }
     }
 };
-
+//劫持节点
 var nodeFragment = function(id,vm)
 {
     var frag = document.createDocumentFragment(); // documentFragment 对象可以劫持 DOM结构。加入documentFragment的Node将自动从DOM中删除
@@ -47,14 +69,16 @@ var nodeFragment = function(id,vm)
     var child;
     while (child = app.firstChild)
     {
-        compile(child,vm)
+        compile(child,vm);
         frag.appendChild(child);
     }
     return frag;
 };
+//初始化
 var tiny = function(param)
 {
     this.data = param.data;
+    observe(this.data);
     var id = param.ele;
     var dom = nodeFragment(id,this);
     document.getElementById(id).appendChild(dom);
