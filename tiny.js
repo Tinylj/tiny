@@ -1,3 +1,8 @@
+/**
+ * Created by Tiny Lu on 2018/06/02.
+ * 极简双向绑定实现
+ */
+//根据属性ID 找到数组中的对应对象的数组
 Array.prototype.getbyfield = function(field,value)
 {
     var _this = this;
@@ -11,6 +16,7 @@ Array.prototype.getbyfield = function(field,value)
     }
     return rlist;
 };
+//监听对象的get,set函数，并且
 var defineProperty = function(obj,key,val,publisher)
 {
     Object.defineProperty(obj,key,{
@@ -35,7 +41,7 @@ var observe = function(obj)//循环监听一个对象中的所有的属性值
     });
     return psherList;
 };
-//发布者函数，在观察者模式中，必然有发布者和订阅者
+//在观察者模式中，必然有发布者和订阅者，publisher为发布者
 var publisher = function(key)
 {
     this.key = key;
@@ -56,6 +62,7 @@ publisher.prototype = {
         });
     }
 };
+//在观察者模式中，必然有发布者和订阅者，watcher为订阅者
 var watcher = function(node,vm,key)
 {
     this.node = node;
